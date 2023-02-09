@@ -1,5 +1,7 @@
 const url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
 
+
+//initialize dropdown
 function init(){
     let dropdownMenu = d3.select("#selDataset");
     d3.json(url).then((info) => {
@@ -23,10 +25,13 @@ function optionChanged(newSelection){
     dashboard(newSelection);
 };
 
+
+// create dashboard
+
 function dashboard(sample){
     d3.json(url).then((data) => {
         let sampleinfo = data.samples;
-        console.log(sampleinfo)
+        // console.log(sampleinfo)
 
         let sampleSelect = sampleinfo.filter(sampleID => sampleID.id == sample);
 
@@ -37,18 +42,18 @@ function dashboard(sample){
         let sample_values = sampleSelect[0].sample_values;
 
 
+// create top 10 list
 
-
-        let topO_ids = otu_ids.slice(0,10).reverse();
-
-        let topO_labels = otu_labels.slice(0,10).reverse();
 
         let topSamples = sample_values.slice(0,10).reverse();
+        let topO_ids = otu_ids.slice(0,10).reverse();
+
+        let topO_labels = otu_labels.slice(0,10).reverse();    
 
         let topO_yaxis = topO_ids.map(item => `OTU ${item}`);
 
 
-
+// prepare bar graph variables
 
         var trace1 = {
             x: topSamples,
@@ -65,9 +70,12 @@ function dashboard(sample){
             height: 600,
             width: 500
         };
-
+//plot bar graph
         Plotly.newPlot("bar", barData, barLayout)
 
+        
+        
+// prepare bubble graph variables       
         var trace2 = {
             x: otu_ids,
             y: sample_values,
@@ -92,8 +100,13 @@ function dashboard(sample){
             }
         };
         
+//plot bubble graph
+        
         Plotly.newPlot('bubble', bub_data,bub_layout);
 
+        
+        
+//create metadata panel        
         let metadata_info = data.metadata;
 
         let metadata_selected = metadata_info.filter(metadataID => metadataID.id == sample);
