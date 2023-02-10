@@ -18,7 +18,7 @@ function init(){
 init();
 
 
-// Click Reaction - optionChanged function
+// adding option changed function
 
 
 function optionChanged(newSelection){
@@ -35,7 +35,11 @@ function dashboard(sample){
 
         let sampleSelect = sampleinfo.filter(sampleID => sampleID.id == sample);
 
+        // console.log(sampleSelect)
+
         let otu_ids = sampleSelect[0].otu_ids;
+
+        // console.log(otu_ids)
 
         let otu_labels = sampleSelect[0].otu_labels;
 
@@ -46,6 +50,7 @@ function dashboard(sample){
 
 
         let topSamples = sample_values.slice(0,10).reverse();
+        
         let topO_ids = otu_ids.slice(0,10).reverse();
 
         let topO_labels = otu_labels.slice(0,10).reverse();    
